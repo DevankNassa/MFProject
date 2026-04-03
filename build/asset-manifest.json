@@ -1,13 +1,13 @@
 {
   "files": {
     "main.css": "/MFProject/static/css/main.ab2a1b3a.css",
-    "main.js": "/MFProject/static/js/main.ba2a455f.js",
+    "main.js": "/MFProject/static/js/main.d3c35b44.js",
     "index.html": "/MFProject/index.html",
     "main.ab2a1b3a.css.map": "/MFProject/static/css/main.ab2a1b3a.css.map",
-    "main.ba2a455f.js.map": "/MFProject/static/js/main.ba2a455f.js.map"
+    "main.d3c35b44.js.map": "/MFProject/static/js/main.d3c35b44.js.map"
   },
   "entrypoints": [
     "static/css/main.ab2a1b3a.css",
-    "static/js/main.ba2a455f.js"
+    "static/js/main.d3c35b44.js"
   ]
 }

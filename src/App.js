@@ -3,7 +3,7 @@ import axios from 'axios';
 import { LineChart, Line, XAxis, YAxis, CartesianGrid, Tooltip, ResponsiveContainer } from 'recharts';
 import './App.css';
 
-const API_BASE = 'https://mfapi.in';
+const API_BASE = 'https://api.mfapi.in';
 
 function App() {
   const [allFunds, setAllFunds] = useState([]);
