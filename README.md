@@ -17,6 +17,14 @@ A React-based dashboard that uses `mfapi.in` to fetch Indian mutual fund schemes
 
 - `npm start`
 
+### Deploy to GitHub Pages
+
+1. Ensure repository is pushed to GitHub at `https://github.com/<username>/<repo>` (e.g. `DevankNassa/MFProject`).
+2. `npm run deploy`
+3. Open `https://<username>.github.io/<repo>` (e.g. `https://DevankNassa.github.io/MFProject`).
+
+> Note: In `package.json`, `homepage` should match this URL and deployment uses `gh-pages`.
+
 ### How it works
 
 - Calls `https://mfapi.in/mf` to load scheme list
