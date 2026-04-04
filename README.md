@@ -1,41 +1,46 @@
-# MFProject
+# MF Project
 
-## Indian Mutual Fund Portfolio Dashboard
+Simple React boilerplate project.
 
-A React-based dashboard that uses `mfapi.in` to fetch Indian mutual fund schemes and NAV history.
+## Available Scripts
 
-### Prerequisites
+In the project directory, you can run:
 
-- Node.js (v16 or higher) - Download from [nodejs.org](https://nodejs.org/)
+### `npm start`
+Runs the app in development mode at [http://localhost:3000](http://localhost:3000).
 
-### Setup
+### `npm build`
+Builds the app for production to the `build` folder.
+
+### `npm test`
+Launches the test runner.
+
+## Installation
 
 1. Install dependencies:
-   - `npm install`
+```bash
+npm install
+```
 
-### Run
+2. Start the development server:
+```bash
+npm start
+```
 
-- `npm start`
+## Project Structure
 
-### Deploy to GitHub Pages
+```
+src/
+├── App.js       - Main App component
+├── App.css      - App styles
+├── index.js     - React entry point
+└── index.css    - Global styles
 
-1. Ensure repository is pushed to GitHub at `https://github.com/<username>/<repo>` (e.g. `DevankNassa/MFProject`).
-2. `npm run deploy`
-3. Open `https://<username>.github.io/<repo>` (e.g. `https://DevankNassa.github.io/MFProject`).
+public/
+└── index.html   - HTML template
+```
 
-> Note: In `package.json`, `homepage` should match this URL and deployment uses `gh-pages`.
+## Learn More
 
-### How it works
-
-- Calls `https://mfapi.in/mf` to load scheme list
-- `https://mfapi.in/mf/<scheme_code>` to load historical NAV
-- Sidebar search and multi-select for funds
-- Portfolio snapshot + NAV trend charts
-- Responsive design with charts using Recharts
-
-### Tech Stack
-
-- React 18
-- Axios for API calls
-- Recharts for data visualization
-- CSS for styling
+- [React Documentation](https://reactjs.org)
+- [Create React App Documentation](https://create-react-app.dev)
