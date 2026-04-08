@@ -21,6 +21,14 @@ function ConvertedData({ data }) {
 function SearchResults({ data}) {
   const [selectedItems, setSelectedItems] = useState([]);
   const [searchQuery, setSearchQuery] = useState('');
+  const [selectedHeaders, setSelectedHeaders] = useState([
+    'Code',
+    'Scheme Name',
+    'Scheme NAV Name',
+    'ISIN Div Payout/ ISIN GrowthISIN Div Reinvestment'
+  ]);
+
+  const allHeaders = Object.keys(data[0] || {});
 
   const filteredData = data.filter(item => {
     if (!searchQuery) return false; // Only show when searching
@@ -41,12 +49,18 @@ function SearchResults({ data}) {
     }
   };
 
-  const headers = Object.keys(data[0] || {});
+  const toggleHeader = (header) => {
+    setSelectedHeaders(prev =>
+      prev.includes(header)
+        ? prev.filter(h => h !== header)
+        : [...prev, header]
+    );
+  };
 
   return (
-    <div >
-      <div className="search-container">
-      <div>
+    <div>
+      <div className="search-and-dropdown">
+        <div className="search-container">
           <h2>Search</h2>
           <input
             type="text"
@@ -56,7 +70,7 @@ function SearchResults({ data}) {
             onChange={(e) => setSearchQuery(e.target.value)}
           />
         </div>
-      {searchQuery && (
+        {searchQuery && (
         <div className="dropdown-contents">
           <h3>Search Results - Select Items</h3>
           <div style={{ maxHeight: '200px', overflowY: 'auto', border: '1px solid #ccc', padding: '10px' }}>
@@ -72,20 +86,38 @@ function SearchResults({ data}) {
           </div>
         </div>
       )}
+
+      
+      <div className="dropdown-container">
+          <h3>Fields to display</h3>
+          <div style={{ maxHeight: '200px', overflowY: 'auto', border: '1px solid #ccc', padding: '10px' }}>
+            {allHeaders.map((header) => (
+              <label key={header} style={{ display: 'block', marginBottom: '4px' }}>
+                <input
+                  type="checkbox"
+                  checked={selectedHeaders.includes(header)}
+                  onChange={() => toggleHeader(header)}
+                />
+                {header}
+              </label>
+            ))}
+          </div>
+        </div>
       </div>
+
       {selectedItems.length > 0 && (
         <div>
           <h2>Selected Items</h2>
           <table border="1" style={{ width: '100%', borderCollapse: 'collapse' }}>
             <thead>
               <tr>
-                {headers.map(header => <th key={header}>{header}</th>)}
+                {selectedHeaders.map(header => <th key={header}>{header}</th>)}
               </tr>
             </thead>
             <tbody>
               {selectedItems.map((item, index) => (
                 <tr key={index}>
-                  {headers.map(header => <td key={header}>{item[header]}</td>)}
+                  {selectedHeaders.map(header => <td key={header}>{item[header]}</td>)}
                 </tr>
               ))}
             </tbody>
