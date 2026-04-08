@@ -1,6 +1,7 @@
 import './App.css';
 import { useState, useEffect } from 'react';
 import Papa from 'papaparse';
+import { getLatestMFData } from './apiCalls.js';
 
 function SchemeRawData({ content }) {
   return (
@@ -20,6 +21,7 @@ function ConvertedData({ data }) {
 
 function SearchResults({ data }) {
   const [selectedItems, setSelectedItems] = useState([]);
+  const [latestNavs, setLatestNavs] = useState({});
   const [searchQuery, setSearchQuery] = useState('');
   const [selectedHeaders, setSelectedHeaders] = useState([
     'Code',
@@ -56,6 +58,32 @@ function SearchResults({ data }) {
         : [...prev, header]
     );
   };
+
+  const fetchLatestNavs = async () => {
+    if (!selectedItems.length) {
+      setLatestNavs({});
+      return;
+    }
+
+    const navs = {};
+    await Promise.all(selectedItems.map(async (item) => {
+      try {
+        const result = await getLatestMFData(item.Code);
+        navs[item.Code] = result?.data?.[0]?.nav ?? result?.data?.netAssetValue ?? 'N/A';
+      } catch (error) {
+        console.error('Error fetching latest MF data for', item.Code, error);
+        navs[item.Code] = 'Error';
+      }
+    }));
+
+    setLatestNavs(navs);
+  };
+
+  useEffect(() => {
+    if (selectedHeaders.includes('latest')) {
+      fetchLatestNavs();
+    }
+  }, [selectedItems, selectedHeaders]);
 
   return (
     <div>
@@ -102,6 +130,14 @@ function SearchResults({ data }) {
                 {header}
               </label>
             ))}
+            <label>
+              <input
+                type="checkbox"
+                checked={selectedHeaders.includes('latest')}
+                onChange={() => toggleHeader('latest')}
+              />
+              Latest NAV<span className="api-tag">MF API</span>
+            </label>
           </div>
         </div>
       </div>
@@ -118,7 +154,12 @@ function SearchResults({ data }) {
             <tbody>
               {selectedItems.map((item, index) => (
                 <tr key={index}>
-                  {selectedHeaders.map(header => <td key={header}>{item[header]}</td>)}
+                  {selectedHeaders.map(header => {
+                    const value = header === 'latest'
+                      ? latestNavs[item.Code] ?? 'Loading...'
+                      : item[header];
+                    return <td key={header}>{value}</td>;
+                  })}
                 </tr>
               ))}
             </tbody>
