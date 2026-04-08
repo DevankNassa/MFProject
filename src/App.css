@@ -90,3 +90,31 @@ pre {
   max-height: 300px;
   overflow-x: auto;
 }
+
+
+.search-container {
+  width: 50%;
+  text-align: left;
+  margin-left: 10%;
+
+}
+
+.search-container .search-input {
+  padding: 10px;
+  font-size: 16px;
+  border: none;
+  border-radius: 4px;
+  width: 80%;
+  display: block;
+
+}
+
+.dropdown-contents {
+  width: calc(80% - 20px);
+  text-align: left;
+  display: inline-block;
+  background-color: #1e1e1e;
+  padding: 20px;
+  border-radius: 8px;
+}
+

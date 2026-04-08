@@ -18,8 +18,9 @@ function ConvertedData({ data }) {
   );
 }
 
-function SearchResults({ data, searchQuery }) {
+function SearchResults({ data}) {
   const [selectedItems, setSelectedItems] = useState([]);
+  const [searchQuery, setSearchQuery] = useState('');
 
   const filteredData = data.filter(item => {
     if (!searchQuery) return false; // Only show when searching
@@ -43,10 +44,21 @@ function SearchResults({ data, searchQuery }) {
   const headers = Object.keys(data[0] || {});
 
   return (
-    <div>
+    <div >
+      <div className="search-container">
+      <div>
+          <h2>Search</h2>
+          <input
+            type="text"
+            placeholder="Search by Code, Scheme Name, Scheme NAV Name, or ISIN"
+            className="search-input"
+            value={searchQuery}
+            onChange={(e) => setSearchQuery(e.target.value)}
+          />
+        </div>
       {searchQuery && (
-        <div>
-          <h2>Search Results - Select Items</h2>
+        <div className="dropdown-contents">
+          <h3>Search Results - Select Items</h3>
           <div style={{ maxHeight: '200px', overflowY: 'auto', border: '1px solid #ccc', padding: '10px' }}>
             {filteredData.map((item, index) => (
               <label key={index} style={{ display: 'block' }}>
@@ -60,6 +72,7 @@ function SearchResults({ data, searchQuery }) {
           </div>
         </div>
       )}
+      </div>
       {selectedItems.length > 0 && (
         <div>
           <h2>Selected Items</h2>
@@ -86,7 +99,6 @@ function SearchResults({ data, searchQuery }) {
 function App() {
   const [rawContent, setRawContent] = useState('');
   const [jsonData, setJsonData] = useState([]);
-  const [searchQuery, setSearchQuery] = useState('');
 
   useEffect(() => {
     fetch(process.env.PUBLIC_URL + '/rawData/SchemeData0704262318SS.csv')
@@ -113,16 +125,7 @@ function App() {
           </button>
         </div>
         <ConvertedData data={jsonData} />
-        <div>
-          <h2>Search</h2>
-          <input
-            type="text"
-            placeholder="Search by Code, Scheme Name, Scheme NAV Name, or ISIN"
-            value={searchQuery}
-            onChange={(e) => setSearchQuery(e.target.value)}
-          />
-        </div>
-        <SearchResults data={jsonData} searchQuery={searchQuery} />
+        <SearchResults data={jsonData}  />
       </div>
     </div>
   );
