@@ -69,8 +69,7 @@ function SearchResults({ data}) {
             value={searchQuery}
             onChange={(e) => setSearchQuery(e.target.value)}
           />
-        </div>
-        {searchQuery && (
+{searchQuery && (
         <div className="dropdown-contents">
           <h3>Search Results - Select Items</h3>
           <div style={{ maxHeight: '200px', overflowY: 'auto', border: '1px solid #ccc', padding: '10px' }}>
@@ -87,10 +86,12 @@ function SearchResults({ data}) {
         </div>
       )}
 
+        </div>
+        
       
       <div className="dropdown-container">
           <h3>Fields to display</h3>
-          <div style={{ maxHeight: '200px', overflowY: 'auto', border: '1px solid #ccc', padding: '10px' }}>
+          <div className="dropdown-contents" >
             {allHeaders.map((header) => (
               <label key={header} style={{ display: 'block', marginBottom: '4px' }}>
                 <input
