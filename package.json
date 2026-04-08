@@ -2,6 +2,7 @@
   "name": "mf-project",
   "version": "0.1.0",
   "private": true,
+  "homepage": "https://DevankNassa.github.io/MFProject/build",
   "dependencies": {
     "papaparse": "^5.4.1",
     "react": "^18.2.0",
