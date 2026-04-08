@@ -1,5 +1,5 @@
 import './App.css';
-import {useState,useEffect} from 'react';
+import { useState, useEffect } from 'react';
 import Papa from 'papaparse';
 
 function SchemeRawData({ content }) {
@@ -18,7 +18,7 @@ function ConvertedData({ data }) {
   );
 }
 
-function SearchResults({ data}) {
+function SearchResults({ data }) {
   const [selectedItems, setSelectedItems] = useState([]);
   const [searchQuery, setSearchQuery] = useState('');
   const [selectedHeaders, setSelectedHeaders] = useState([
@@ -69,27 +69,27 @@ function SearchResults({ data}) {
             value={searchQuery}
             onChange={(e) => setSearchQuery(e.target.value)}
           />
-{searchQuery && (
-        <div className="dropdown-contents">
-          <h3>Search Results - Select Items</h3>
-          <div style={{ maxHeight: '200px', overflowY: 'auto', border: '1px solid #ccc', padding: '10px' }}>
-            {filteredData.map((item, index) => (
-              <label key={index} style={{ display: 'block' }}>
-                <input
-                  type="checkbox"
-                  onChange={(e) => handleCheckboxChange(item, e.target.checked)}
-                />
-                {item['Scheme Name']} (Code: {item.Code})
-              </label>
-            ))}
-          </div>
-        </div>
-      )}
+          {searchQuery && (
+            <div className="dropdown-contents">
+              <h3>Search Results - Select Items</h3>
+              <div style={{ maxHeight: '200px', overflowY: 'auto', border: '1px solid #ccc', padding: '10px' }}>
+                {filteredData.map((item, index) => (
+                  <label key={index} style={{ display: 'block' }}>
+                    <input
+                      type="checkbox"
+                      onChange={(e) => handleCheckboxChange(item, e.target.checked)}
+                    />
+                    {item['Scheme Name']} (Code: {item.Code})
+                  </label>
+                ))}
+              </div>
+            </div>
+          )}
 
         </div>
-        
-      
-      <div className="dropdown-container">
+
+
+        <div className="dropdown-container">
           <h3>Fields to display</h3>
           <div className="dropdown-contents" >
             {allHeaders.map((header) => (
@@ -144,7 +144,7 @@ function App() {
     const parsed = Papa.parse(rawContent, { header: true });
     setJsonData(parsed.data);
   };
-  
+
   return (
     <div className="App">
       <header className="App-header">
@@ -158,7 +158,7 @@ function App() {
           </button>
         </div>
         <ConvertedData data={jsonData} />
-        <SearchResults data={jsonData}  />
+        <SearchResults data={jsonData} />
       </div>
     </div>
   );

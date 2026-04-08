@@ -129,8 +129,8 @@ pre {
 }
 
 .dropdown-container .dropdown-contents {
-  maxHeight: '200px';
-  overflowY: 'auto';
+  max-height: '200px';
+  overflow-y: 'auto';
   border: '1px solid #ccc';
   padding: '10px';
 }
