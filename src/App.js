@@ -81,7 +81,10 @@ function SearchResults({ data }) {
 
   useEffect(() => {
     if (selectedHeaders.includes('latest')) {
-      fetchLatestNavs();
+      const debounceTimer = setTimeout(() => {
+        fetchLatestNavs();
+      }, 500);
+      return () => clearTimeout(debounceTimer);
     }
   }, [selectedItems, selectedHeaders]);
 

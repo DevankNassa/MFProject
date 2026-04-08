@@ -11,3 +11,11 @@ export const getLatestMFData = async (code) => {
     throw error;
   }
 };
+
+export const debounce = (func, delay) => {
+  let timeoutId;
+  return (...args) => {
+    clearTimeout(timeoutId);
+    timeoutId = setTimeout(() => func(...args), delay);
+  };
+};
