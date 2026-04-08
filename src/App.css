@@ -27,11 +27,16 @@ body {
 
 .App-header h1 {
   margin: 0;
-  font-size: 3rem;
+  font-size: 1.5rem;
+}
+
+h2 {
+  margin-top: 20px;
+  font-size: 1.2rem;
 }
 
 .App-header p {
-  font-size: 1.5rem;
+  font-size: 0.8rem;
   margin: 1rem 0 0 0;
 }
 
@@ -73,4 +78,15 @@ body {
 .button-container button:active .button_top {
   /* Push the button downwards when pressed */
   transform: translateY(0);
+}
+
+pre {
+  text-align: left;
+  margin: 20px auto;
+  padding: 20px;
+  background-color: #1e1e1e;
+  border-radius: 8px;
+  max-width: 80%;
+  max-height: 300px;
+  overflow-x: auto;
 }
