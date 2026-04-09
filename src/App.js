@@ -60,23 +60,17 @@ function SearchResults({ data }) {
   };
 
   const fetchLatestNavs = async () => {
-    if (!selectedItems.length) {
-      setLatestNavs({});
-      return;
-    }
-
-    const navs = {};
-    await Promise.all(selectedItems.map(async (item) => {
-      try {
-        const result = await getLatestMFData(item.Code);
-        navs[item.Code] = result?.data?.[0]?.nav ?? result?.data?.netAssetValue ?? 'N/A';
-      } catch (error) {
-        console.error('Error fetching latest MF data for', item.Code, error);
-        navs[item.Code] = 'Error';
+    const codesToFetch = selectedItems
+      .filter(item => !latestNavs[item.Code]) // Only fetch if not already fetched
+      .map(item => item.Code);
+    if (codesToFetch.length > 0) {
+      for (const code of codesToFetch) {
+        // Add a 1-second delay between API calls to avoid hitting rate limits
+        await new Promise(resolve => setTimeout(resolve, 1000));
+        const navData = await getLatestMFData(code);
+        setLatestNavs(prev => ({ ...prev, [code]: navData.data?.[0]?.nav || 'N/A' }));
       }
-    }));
-
-    setLatestNavs(navs);
+    }
   };
 
   useEffect(() => {
