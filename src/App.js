@@ -1,5 +1,5 @@
 import './App.css';
-import { useState, useEffect, useCallback, useRef } from 'react';
+import { useState, useEffect } from 'react';
 import Papa from 'papaparse';
 import { getLatestMFData } from './apiCalls.js';
 
@@ -30,8 +30,6 @@ function SearchResults({ data }) {
     'ISIN Div Payout/ ISIN GrowthISIN Div Reinvestment'
   ]);
 
-  const debounceTimerRef = useRef(null);
-
   const allHeaders = Object.keys(data[0] || {});
 
   const filteredData = data.filter(item => {
@@ -61,7 +59,7 @@ function SearchResults({ data }) {
     );
   };
 
-  const fetchLatestNavs = useCallback(async () => {
+  const fetchLatestNavs = async () => {
     if (!selectedItems.length) {
       setLatestNavs({});
       return;
@@ -70,7 +68,6 @@ function SearchResults({ data }) {
     const navs = {};
     await Promise.all(selectedItems.map(async (item) => {
       try {
-        if(navs[item.Code]) return; // Skip if already fetched for this code
         const result = await getLatestMFData(item.Code);
         navs[item.Code] = result?.data?.[0]?.nav ?? result?.data?.netAssetValue ?? 'N/A';
       } catch (error) {
@@ -80,28 +77,13 @@ function SearchResults({ data }) {
     }));
 
     setLatestNavs(navs);
-  }, [selectedItems]);
+  };
 
   useEffect(() => {
     if (selectedHeaders.includes('latest')) {
-      // Clear previous timer
-      if (debounceTimerRef.current) {
-        clearTimeout(debounceTimerRef.current);
-      }
-      
-      // Set new timer
-      debounceTimerRef.current = setTimeout(() => {
-        fetchLatestNavs();
-      }, 5000);
-
-      // Cleanup on unmount or next effect
-      return () => {
-        if (debounceTimerRef.current) {
-          clearTimeout(debounceTimerRef.current);
-        }
-      };
+      fetchLatestNavs();
     }
-  }, [selectedItems, selectedHeaders, fetchLatestNavs]);
+  }, [selectedItems, selectedHeaders]);
 
   return (
     <div>
